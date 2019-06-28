@@ -36,13 +36,13 @@ stations_down() {
 		-e '^253' \
 		-e '^255' \
 		-e '^272' \
-		-e '^273'
+		-e '^273' | sed 's/^2//'
 }
 
 stations_missing() {
 	/etc/asterisk/stations.sh | sed -E -n 's/^2(..).*$/\1/p' | sort > /tmp/registered-stations
 	sort /etc/asterisk/defined-extensions.txt > /tmp/defined-stations
-	comm -1 -3 /tmp/registered-stations /tmp/defined-stations | sed 's/^/2/'
+	comm -1 -3 /tmp/registered-stations /tmp/defined-stations
 }
 
 
